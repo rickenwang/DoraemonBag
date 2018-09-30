@@ -1,0 +1,585 @@
+
+研究路径：
+
+Android Touch 事件响应机制 -> Nested Scroll 处理框架  -> SwipeRefreshLayout 源码分析
+
+其他相关类 Drawable View ViewGroup Animation Animator Matrix Interceptor Transformation
+
+
+
+
+
+/**
+ * 任何想要支持给其父容器（ViewGroup）分发滚动操作的 View 的子类应该实现这个接口。
+ * 
+ * 这个接口的实现类需要一个 NestedScrollingChildHelper 的成员变量，来代理任意相同签名的 Veiw 方法。
+ *
+ * 调用内部的滚动方法的 View 应该通过 ViewCompat、ViewGroupCompat 或者 ViewParentCompat，这可以
+ * 保证在 Android 5.0 以及之前的版本上的滚动 View 的兼容性。
+ */
+public interface NestedScrollingChild {
+
+    /**
+     * 是否使能该 View 的嵌套滚动。
+     *
+     * 如果使能的话，则允许该 View 在当前层次结构中兼容的父 View 中启用嵌套滚动，如果这个 View 并没有实现
+     * 嵌套滚动的话，使能后不会有任何影响。
+     * 在滚动的过程中 Disable，会和调用 stopNestedScroll() 方法一样去停止嵌套滚动。
+     *
+     */
+    void setNesedScrollingEnable(boolean enable);
+    
+    /**
+     * 返回是否使能了 View 的嵌套滚动。
+     *
+     * 如果使能了，并且这个 View 类是支持滚动的，这个 View 会在合适的时间充当一个嵌套滚动的子 View，并给
+     * 其兼容和协作的父 View 发送数据。
+     */
+    boolean isNestedScrollingEnable();
+    
+    
+    /**
+     * 沿给定的坐标轴开始滚动操作。
+     *
+     * 启动嵌套滚动的视图必须遵守如下的规则：
+     *
+     * 1、该 View 会在启动滚动操作时调用 startNestedScroll() 方法。在触摸滚动的情况下，会导致最初的 ACTION_DOWN。
+     * 在触摸滚动的情况下，嵌套滚动会自动和调用 requestDisallowInterceptTouchEvent(boolean) 方法一样的方式终止。
+     * 在通过代码滚动时，必须调用显式调用 stopNestedScroll() 方法来指出嵌套滚动的位置。
+     *
+     * 2、如果 startNestedScroll 返回 true，则说明找到了合作的父 View。如果它返回了 false，那么调用者可能忽略余下
+     * 的规则，直到下一次滚动。在已经开始滚动时调用 startNestedScroll 也会返回 true。
+     *
+     * 3、在每个滚动增量出现时，调用者应该在计算出滚动增量时，调用 dispatchNestedPreScroll()。如果它返回 true，父类嵌套
+     * 滚动至少部分消费了滚动，调用者应该调整其滚动数值。
+     * 
+     * 4、在收到滚动增量的提醒后，调用者应该调用 dispatchNestedScroll() 方法，传递已经消费的增量和还未消费的增量。嵌套滚动
+     * 父容器可能会以不同的方式来处理这些值。
+     *
+     * @param axes SCROLL_AXIS_HORIZONTAL 和 SCROLL_AXIS_VERTICAL 的组合。
+     * @return 如果有合适的父 View、且使能了当前手势的嵌套滚动。
+     */
+    boolean startNestedScroll(int axes);
+    
+    
+    /**
+     * 停止一个进行中的嵌套滚动。
+     * 
+     * 如果在没有进行嵌套滚动时调用了这个方法，也不会有任何问题。
+     */
+    void stopNestedScroll();
+    
+    
+    /**
+     * 该 View 是否有一个嵌套滚动的父 View。
+     *
+     * 有一个嵌套滚动的 parent 表明该 View 已经启动嵌套滚动，并且进一步在 View 层级中被老的 View 所接受
+     */
+    boolean hasNestedScrollingParent();
+    
+    
+    /**
+     * 分发一次嵌套滚动的步进。
+     *
+     * 支持嵌套滚动的 View 的实现必须要调用这个方法来通知其 NestedScrollingParent 滚动的进度。如果嵌套滚动并没有在进行中，
+     * 或者并没有使能，那么这个方法没有作用。
+     *
+     * 兼容的 View 实现也应该在自己消费一个滚动事件的组件前调用 dispatchNestedPreScroll()。
+     *
+     * @param dxConsumed 在本次滚动步进期间该 View 消耗的水平像素点
+     * @param dyConsumed
+     * @param dxUnconsumed 该 View 未消耗的水平 View 像素点
+     * @param dyConsumed
+     * @param offsetInWindow 可选的。如果不为空，则会包含从本次操作之前到结束该 View 的本地 View 坐标。View 的实现类
+     *                       可以用来适配期望的输入坐标追踪。
+     *
+     * @return 如果事件分发了，则返回 true，否则返回 false。
+     */
+    boolean dispatchNestedScroll(int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int[] offsetInWindow);
+    
+    
+    /**
+     * 在这个 View 消费一个正在进行的嵌套滚动前分发该滚动步进。
+     *
+     * 给 parent View 一个机会在 子 View 消费嵌套滚动前消费滚动事件。
+     *
+     * @param dx 水平滚动距离
+     * @param dy 垂直滚动距离
+     * @param consumed 输出。如果不为空，consumed[0] 表示 Parent 消耗的水平距离，consumed[1] 表示 Parent 消耗的垂直距离。
+     * @param offsetInWindow 可选。如果不为空，那么会包含该 View 从开始操作前到结束后在本地 View 坐标上的偏移量。View 的实现类
+     *						 可能用来适配期望的输入坐标追踪。
+     * 
+     * @return Parent 是否消耗了部分或者所有的滚动增量
+     */
+    boolean dispatchNestedPreScroll(int dx, int dy, int[] consumed, int[] offsetInWindow);
+    
+    
+    /**
+     * 分发一个 fling 给 NestedScrollingParent。
+     *
+     * 这个方法应该用来表明 NestedScrollingChild 被检测到 fling，一般来说，触摸滚动以滑动的方向上的速度达到了或者超过了最小的 fling 速度。
+     *
+     * 如果一个 NestedScrollingChild View 正常的 fling 但是在自己内容的边缘，它可以使用这个方法让其 NestedScrollingParent 来代理本次
+     * fling。NestedScrollingParent 可以选择消费这个 fling 或者仅仅是进行观察。
+     *
+     * @param velocityX 水平 fling 速度（每秒的像素点数）
+     * @param velocityY 
+     * @param consumed 如果 Child 消费了本次 fling 则为 true，否则为 false。
+     *
+     * @return 如果 NestedScrollingParent 消费了，或者对 fling 做出了反应，则为 true。
+     */
+    boolean dispatchNestedFling(float velocityX, float velocityY, boolean consumed);
+    
+    
+    /**
+     * 在这个 View 处理前，将 fling 分发给其 NestedScrollingParent。
+     *
+     * dispatchNestedPreFling 给 Parent View 提供了一个在优先消费的机会，如果这个方法返回 true，那么表示 NestedScrollingParent 消费
+     * 了 fling，并且这个 Child View 不应该再滚动了。
+     *
+     * 为了更好的用户体验，在同一时间点应该只有一个 View 消费 fling，如果 Parent View 消费了 fling，那么这个方法应该返回 false，自定义 View 
+     * 的实现类应该用如下两种方式来处理
+     *
+     * 1、如果自定义 View 分页了，并且需要设置一个固定的 page-point，请不要调用 dispatchNestedPreFling() 方法，消费这个 fling，并且定位
+     * 到一个有效的位置。
+     * 2、如果 Nested Parent 消费了 fling，这个 view 不应该滚动，即使被定位到了一个有效的空闲位置。
+     */
+    boolean dispatchNestedPreFling(float velocityX, float velocityY);
+    
+}
+
+
+另外有 NestedScrollingChildHelper、NestedScrollingParent 和 NestedScrollingParentHelper
+
+交互流程：
+
+	NestedScrollingChild:                                                             NestedScrollingParent
+
+    startNestedScroll(int axes);           // 通知 Child 有滑动事件，自行决定是否接受本次滑动
+                                        -> boolean onStartNestedScroll(@NonNull View child, @NonNull View target, @ScrollAxis int axes);
+                                           // 如果 onStartNestedScroll() 方法返回 true，则会回调这个方法来给 Parent 及其父类做一些初始化配置的工作。
+                                           void onNestedScrollAccepted(@NonNull View child, @NonNull View target, @ScrollAxis int axes);
+                                        
+    // 在 Child 消费滑动前通知 Parent，让 Parent 决定是否提前进行消费                     
+    boolean dispatchNestedPreScroll(int dx, int dy, @Nullable int[] consumed,
+            @Nullable int[] offsetInWindow); 
+             							
+             							-> void onNestedPreScroll(@NonNull View target, int dx, int dy, @NonNull int[] consumed);
+    
+    // 在 Child 消费滑动后，通知 Parent 该滑动的消费情况，以及 Child 的偏移量
+    boolean dispatchNestedScroll(int dxConsumed, int dyConsumed,
+            int dxUnconsumed, int dyUnconsumed, @Nullable int[] offsetInWindow);
+            
+            							-> void onNestedScroll(@NonNull View target, int dxConsumed, int dyConsumed,
+            									int dxUnconsumed, int dyUnconsumed);
+    
+    stopNestedScroll();
+									    -> void onStopNestedScroll(@NonNull View target);
+
+
+
+接下来看最关键的一个类 SwipeRefreshLayout
+
+
+public class SwipeRefreshLayout extends ViewGroup implement NestedScrollingParent,
+	NestedScrollingChild {
+	
+	private NestedScrollingParentHelper mNestedScrollingParentHelper;
+	private NestedScrollingChildHelper mNestedScrollingChildHelper;
+	
+	
+	private DecelerateInterpolator mDecelerateInterpolator;
+	
+	private CircleImageView mCircleView;
+	
+	private CircularProgressDrawable mProgress;
+	
+	private Animation mScaleAnimation;
+	private Animation mScaleDownAnimation;
+	private Animation mAlphaStartAnimation;
+	private Animation mAlphaMaxAnimation;
+	private Animation mScaleDownToStartAnimation;
+
+
+}
+
+
+我们首先看下 DecelerateInterpolator 类
+
+/**
+ * 一个速率开始很快，然后减速的篡改器。
+ *
+ */
+public class DecelerateInterpolator extends BaseInterpolator implements NativeInterpolatorFactory {
+	
+	/**
+	 * 变化因子
+	 */
+	private float mFactor = 1.0f;
+	
+	public DecelerateInterpolator(){}
+	
+	/**
+	 * @param factor Animation 应该被放松的程度，为 1.0f 的话表示一个颠倒的抛物线，如果大于 1.0f 则表示开始的更快，
+	 *               结束时更慢。
+	 */
+	public DecelerateInterpolator(float factor) {
+		this.factor = factor;
+	}
+	
+	// 根据 mFactor 的值来对时间的变化值进行非线性映射
+	public float getInterpolation(float input) {
+		
+	}
+
+}
+
+abstract public class BaseInterpolator implement Interpolator {
+
+	private int mChangingConfiguration;
+	
+	public int getChangingConfiguration();
+	
+	void setChangingConfiguration(int changingConfiguration);
+}
+
+
+/**
+ * Interpolator 定义了 Animation 变化的比率，允许 Animation 的透明率、范围、平移、旋转可以加速、减速或者重复等。
+ *
+ */
+public interface Interpolator extends TimeInterpolator {
+
+}
+
+/**
+ * 一个时间的 interpolator（篡改器），定义了 Animation 的变化速率，允许 Animation 进行非线性的移动，比如加速和减速等。
+ *
+ */
+public interface TimeInterpolator {
+	
+	/**
+	 * 将 Animation 消失部分的值映射为串改部分的值。
+	 *
+	 * 这个篡改的值之后会乘以 Animation 的变化量，来获得实际当前时间点的真正有效值。
+	 */
+	float getInterpolation(float input);
+}
+
+
+
+接下来我们看下 CircleImageView
+
+/**
+ * 是一个私有的类，主要用于解决在动画实际完成之前调用 AnimationListeners 的问题。
+ * 并且可以支持在旧平台上的阴影问题。 
+ *
+ */
+class CircleImageView extends ImageView {
+
+	/**
+	 * Animation 监听器
+	 */
+	private Animation.AnimationListener mListener;
+
+	public void setAnimationListener(AnimationListener listener) {
+		
+		mListener = listener;
+	}
+
+	@Override
+	public void onAnimationStart() {
+	
+		mListener.onAnimationStart(getAnimation());
+	}
+	
+	@Override
+	public void onAnimationEnd() {
+		
+		mListener.onAnimationEnd(getAnimation());
+	}
+	
+	
+	/**
+	 * extend from View
+	 * 
+	 * 设置该 View 的 Animation。
+	 */
+	public void setAnimation(Animation animation) {
+		
+		mCurrentAnimation = animation;
+		
+		animation.setStartTime(AnimationUtils.currentAnimationTimeMillis());
+		animation.reset();
+	}
+	
+	// extend from View ，马上开始 Animation。
+	public void startAnimation(Animation animation) {}
+
+}
+
+
+接下来我们来看下 CircularProgressDrawable
+
+
+/**
+ * 渲染一个不确定的进度指示动画。
+ *
+ * 可能用 start() 和 stop() 方法来画一个不确定进度的旋转动画，也可能通过 setStartEndTrim() 方法来画一个进度弧线，
+ * CircularProgressDrawable 也支持通过 setArrowEnable() 和 setArrowDimensions() 方法在弧线的结尾添加一个箭头。
+ *
+ * 你可以调用 setStyle() DEFAULT 或者 LARGE 做为其参数，这同时会更新箭头、圆环以及线宽的大小，当然也允许你自定义所有的
+ * 尺寸。
+ *
+ * 如果没有通过 setCenterRadius(float) 或者 setStyle(int) 方法来设置半径的大小，CircularProgressDrawable 会
+ * 通过 setBounds(Rect) 方法来填充边界。
+ */
+public class CircularProgressDrawable extends Drawable implements Animatable {
+
+	/**
+	 * 指示 ring，用来处理动画的状态
+	 */ 
+	private Ring mRing;
+
+	/**
+	 * 控制 Ring 显示的属性动画
+	 */
+	private Animator mAnimator;
+
+	/**
+	 * canvas 的旋转角度
+	 */ 
+	private float mRotation;
+
+	@Override
+	public void draw(Canvas canvas) {
+	
+		Rect bounds = getBounds();
+		canvas.rotate(mRotation, bounds.exactCenterX(), bounds.exactCenterY());
+		mRing.draw(canvas, bounds);
+	
+	}
+	
+	@Override
+	public void start() {
+	
+		mAnimator.start();	
+	}
+	
+	@Override
+	public void stop() {
+		
+		mAnimator.cancel();
+	}
+
+
+	private static class Ring {
+		
+		final RectF mTempBounds = new RectF();
+		final Paint mPaint = new Paint();
+		final Paint mArrowPaint = new Paint();
+		final Paint mCirclePaint = new Paint();
+		
+		Path mArrow; // 箭头的路径
+		
+		void draw(Canvas canvas, Rect bounds) {
+		
+		    // 画圆
+		    canvas.drawCircle(arcBounds.centerX(), arcBounds.centerY(), arcBounds.width() / 2f,
+                    mCirclePaint);
+		    
+		    // 画圆弧
+			canvas.drawArc(arcBounds, startAngle, sweepAngle, false, mPaint);
+			
+			// 画三角形
+			canvas.drawPath(mArrow, mArrowPaint);
+			
+		}
+	}
+
+}
+
+
+接下来看下 Animation 类
+
+/**
+ * 
+ * 
+ */
+public abstract class Animation implements Cloneable {
+
+	
+	/**
+	 * 
+	 *
+	 */
+	protected void applyTransformation(float interpolatedTime, Transformation t);
+}
+
+
+/**
+ * 定义一个应用在 Animation 的转换
+ *
+ */
+public class Transformation {
+
+	protected Matrix mMatrix;
+	
+	protected float mAlpha;
+	
+	 
+}
+
+
+/**
+ * 包含了一个 3*3 的坐标转换矩阵，将一个二维的点进行映射
+ * 
+ *   MSCALE_X  MSKEW_X   MTRANS_X
+ *   MSKEW_Y   MSCALE_Y  MTRANS_Y
+ *   MPERSP_0  MPERSP_1  MPERSP_2
+ */
+public class Matrix {
+
+}
+
+
+看到这里，我们先做一个总结：
+
+NestedScrollingChild 和 NestedScrollingParent 是一对通知和处理滑动事件的类
+NestedScrollingChildHelper 和 NestedScrollingParentHelper 用来代理 View 相应方法，可以保证在老版本上的兼容性。 
+
+DecelerateInterpolator 是一个减速的插值类，用来处理下拉时的阻尼感。
+
+CircularProgressDrawable 是一个进度展示的 Drawable
+CircleImageView 是 CircularProgressDrawable 的一个包装类，主要是处理兼容以及 AnimationListener 调用问题，
+
+// 在下拉过程中的动画
+mScaleAnimation 
+mScaleDownAnimation
+mAlphaStartAnimation
+mAlphaMaxAnimation
+mScaleDownToStartAnimation
+
+View mTarget // 是触摸滑动的 View，如 RecyclerView 等
+
+到这里准备工作就做完了，可以开始研究 SwipeRefreshLayout 的代码了。
+
+
+
+我们先来看下 
+
+@Override 
+pubic void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+
+    // 获取 mTarget View 对象
+	ensureTarget(); 
+	
+	// 确定 mTarget 的高度和宽度
+	mTarget.measure(MeasureSpec.makeMeasureSpec(getMeasuredWidth() - getPaddingLeft() - getPaddingRight(),MeasureSpec.EXACTLY), 
+					MeasureSpec.makeMeasureSpec(getMeasuredHeight() - getPaddingTop() - getPaddingBottom(), MeasureSpec.EXACTLY));
+	
+	// 确定 mCircleView 的高度和宽度
+	mCircleView.measure(MeasureSpec.makeMeasureSpec(mCircleDiameter, MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec(mCircleDiameter, MeasureSpec.EXACTLY));
+	
+}
+
+
+然后再看 onLayout() 方法
+
+@Override
+protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+
+	// 确定 mTarget 的位置
+	child.layout(childLeft, childTop, childLeft + childWidth, childTop + childHeight);
+	
+	// 确定 mCircleView 的位置
+	mCircleView.layout((width / 2 - circleWidth / 2), mCurrentTargetOffsetTop,
+                (width / 2 + circleWidth / 2), mCurrentTargetOffsetTop + circleHeight);
+
+}
+
+
+
+/**
+ * 这个方法可以拦截屏幕触摸事件
+ *
+ */
+@Override
+public boolean onInterceptTouchEvent(MotionEvent ev) {
+	
+	action = ev.getActionMasked();
+	
+	switch (action) {
+		case ACTION_DOWN: // 按下
+		case ACTION_MOVE: // DOWN ~ UP
+		case ACTION_UP: // 
+		case ACTION_CANCEL: // 取消
+			
+	
+	}
+
+}
+
+
+
+
+
+
+
+可以做什么？
+
+1、做一个可以用圆环进度做背景的 Drawable
+2、尝试用 Path 画出复杂图形
+3、RecyclerRefreshView  支持下拉刷新和上拉加载更多
+
+
+4、研究 CoordinatorLayout 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
