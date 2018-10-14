@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="progress_indicator_gray_light">#636363</color>
+    <color name="progress_indicator_gray_dark">#aaaaaa</color>
+    <color name="progress_indicator_blue">#303F9F</color>
+</resources>
