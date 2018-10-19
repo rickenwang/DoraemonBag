@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/build/intermediates/res/merged/release/drawable-v21/abc_edit_text_material.xml",
+        "source": "/Users/rickenwang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.0.aar/179b2372f2e7b5102bc6dac5349fc02f/res/drawable-v21/abc_edit_text_material.xml"
+    },
+    {
+        "merged": "/Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/build/intermediates/res/merged/release/drawable-v21/notification_action_background.xml",
+        "source": "/Users/rickenwang/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.0.aar/9d493e2fe1a45b147fde818296d8e738/res/drawable-v21/notification_action_background.xml"
+    },
+    {
+        "merged": "/Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/build/intermediates/res/merged/release/drawable-v21/abc_btn_colored_material.xml",
+        "source": "/Users/rickenwang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.0.aar/179b2372f2e7b5102bc6dac5349fc02f/res/drawable-v21/abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "/Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/build/intermediates/res/merged/release/drawable-v21/abc_action_bar_item_background_material.xml",
+        "source": "/Users/rickenwang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.0.aar/179b2372f2e7b5102bc6dac5349fc02f/res/drawable-v21/abc_action_bar_item_background_material.xml"
+    }
+]

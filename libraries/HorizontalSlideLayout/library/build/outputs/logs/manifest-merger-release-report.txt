@@ -1,0 +1,37 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml:1:1-2:33
+INJECTED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml:1:1-2:33
+INJECTED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml:1:1-2:33
+INJECTED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml:1:1-2:33
+INJECTED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml:1:1-2:33
+INJECTED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml:1:1-2:33
+INJECTED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml:1:1-2:33
+	package
+		ADDED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml:2:5-30
+		INJECTED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml
+		INJECTED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml
+		ADDED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml:1:1-2:33
+		INJECTED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml
+		ADDED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml:1:1-2:33
+		INJECTED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml:1:11-69
+uses-sdk
+INJECTED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml
+INJECTED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml
+INJECTED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml
+INJECTED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml
+		ADDED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml
+		INJECTED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml
+		ADDED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml
+		INJECTED from /Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/src/main/AndroidManifest.xml

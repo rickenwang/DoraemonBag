@@ -1,0 +1,50 @@
+[
+    {
+        "merged": "/Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/build/intermediates/res/merged/release/anim/abc_popup_exit.xml",
+        "source": "/Users/rickenwang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.0.aar/179b2372f2e7b5102bc6dac5349fc02f/res/anim/abc_popup_exit.xml"
+    },
+    {
+        "merged": "/Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/build/intermediates/res/merged/release/anim/abc_popup_enter.xml",
+        "source": "/Users/rickenwang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.0.aar/179b2372f2e7b5102bc6dac5349fc02f/res/anim/abc_popup_enter.xml"
+    },
+    {
+        "merged": "/Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/build/intermediates/res/merged/release/anim/abc_slide_out_top.xml",
+        "source": "/Users/rickenwang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.0.aar/179b2372f2e7b5102bc6dac5349fc02f/res/anim/abc_slide_out_top.xml"
+    },
+    {
+        "merged": "/Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/build/intermediates/res/merged/release/anim/abc_slide_in_top.xml",
+        "source": "/Users/rickenwang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.0.aar/179b2372f2e7b5102bc6dac5349fc02f/res/anim/abc_slide_in_top.xml"
+    },
+    {
+        "merged": "/Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/build/intermediates/res/merged/release/anim/abc_slide_in_bottom.xml",
+        "source": "/Users/rickenwang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.0.aar/179b2372f2e7b5102bc6dac5349fc02f/res/anim/abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "/Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/build/intermediates/res/merged/release/anim/abc_slide_out_bottom.xml",
+        "source": "/Users/rickenwang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.0.aar/179b2372f2e7b5102bc6dac5349fc02f/res/anim/abc_slide_out_bottom.xml"
+    },
+    {
+        "merged": "/Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/build/intermediates/res/merged/release/anim/abc_fade_in.xml",
+        "source": "/Users/rickenwang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.0.aar/179b2372f2e7b5102bc6dac5349fc02f/res/anim/abc_fade_in.xml"
+    },
+    {
+        "merged": "/Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/build/intermediates/res/merged/release/anim/abc_tooltip_enter.xml",
+        "source": "/Users/rickenwang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.0.aar/179b2372f2e7b5102bc6dac5349fc02f/res/anim/abc_tooltip_enter.xml"
+    },
+    {
+        "merged": "/Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/build/intermediates/res/merged/release/anim/abc_fade_out.xml",
+        "source": "/Users/rickenwang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.0.aar/179b2372f2e7b5102bc6dac5349fc02f/res/anim/abc_fade_out.xml"
+    },
+    {
+        "merged": "/Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/build/intermediates/res/merged/release/anim/abc_shrink_fade_out_from_bottom.xml",
+        "source": "/Users/rickenwang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.0.aar/179b2372f2e7b5102bc6dac5349fc02f/res/anim/abc_shrink_fade_out_from_bottom.xml"
+    },
+    {
+        "merged": "/Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/build/intermediates/res/merged/release/anim/abc_grow_fade_in_from_bottom.xml",
+        "source": "/Users/rickenwang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.0.aar/179b2372f2e7b5102bc6dac5349fc02f/res/anim/abc_grow_fade_in_from_bottom.xml"
+    },
+    {
+        "merged": "/Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/library/build/intermediates/res/merged/release/anim/abc_tooltip_exit.xml",
+        "source": "/Users/rickenwang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.0.aar/179b2372f2e7b5102bc6dac5349fc02f/res/anim/abc_tooltip_exit.xml"
+    }
+]

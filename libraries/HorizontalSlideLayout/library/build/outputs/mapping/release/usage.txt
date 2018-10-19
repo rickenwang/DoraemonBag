@@ -1,0 +1,5 @@
+com.doraemon.ui.BuildConfig
+com.doraemon.ui.HorizontalDragLayout
+com.doraemon.ui.HorizontalDragLayout$1
+com.doraemon.ui.HorizontalDragLayout$DefaultDragHelperCallback
+com.doraemon.ui.HorizontalDragLayout$DragHelperCallback

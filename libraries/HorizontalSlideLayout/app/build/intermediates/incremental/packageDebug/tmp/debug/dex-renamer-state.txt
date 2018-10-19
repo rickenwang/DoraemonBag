@@ -1,0 +1,4 @@
+#Fri Oct 12 11:49:09 CST 2018
+base.0=/Users/rickenwang/develop/android/normal/DoraemonBag/libraries/HorizontalSlideLayout/app/build/intermediates/transforms/dexMerger/debug/0
+path.0=classes.dex
+renamed.0=classes.dex
