@@ -34,10 +34,17 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.1.1'
 }
 
+// 不生成 BuildConfig 文件
+project(":library").tasks.whenTaskAdded { task ->
+    if (task.name == 'generateDebugBuildConfig' || task.name == 'generateReleaseBuildConfig' ) {
+        task.enabled = false
+    }
+}
 
-project.extensions.add('groupId', 'com.doraemon.ui.list')
+project.extensions.add('groupId', 'com.doraemon.ui')
 project.extensions.add('artifactId', 'SortedRecyclerView')
 project.extensions.add('packageName', 'SortedRecyclerView')
 project.extensions.add('artifactDesc', 'a doraemon ui component')
 
 apply from: '../../../publish.gradle'
+

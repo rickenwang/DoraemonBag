@@ -10,12 +10,13 @@ import com.doraemon.ui.list.ItemSortable;
 public class Person implements ItemSortable<Person> {
 
     private String name;
-    private boolean beauty;
 
-    public Person(String name, boolean beauty) {
+    private String phone;
+
+    public Person(String name, String phone) {
 
         this.name = name;
-        this.beauty = beauty;
+        this.phone = phone;
     }
 
     @Override
@@ -25,20 +26,22 @@ public class Person implements ItemSortable<Person> {
 
     @Override
     public boolean areContentsTheSame(Person o) {
-        return false;
+        return name.equals(o.name)
+                && phone.equals(o.phone);
     }
 
     @Override
     public boolean areItemsTheSame(Person o) {
-        return equals(o);
+        return name.equals(o.name);
+    }
+
+    @Override
+    public Object payload(Person person) {
+        return 1;
     }
 
     public String getName() {
         return name;
-    }
-
-    public boolean isBeauty() {
-        return beauty;
     }
 
 
@@ -46,7 +49,12 @@ public class Person implements ItemSortable<Person> {
         this.name = name;
     }
 
-    public void setBeauty(boolean beauty) {
-        this.beauty = beauty;
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 }

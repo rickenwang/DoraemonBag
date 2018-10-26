@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <declare-styleable name="ErasableInputText">
+        
+        <attr name="padding_vertical" format="dimension"/>
+        <attr name="padding_start" format="dimension"/>
+        <attr name="text_hint" format="string"/>
+        <attr name="text_size" format="dimension"/>
+
+        <attr name="input_type" format="enum">
+            <enum name="NONE" value="0"/>
+            <enum name="TEXT" value="1"/>
+            <enum name="NUMBER" value="2"/>
+        </attr>
+        
+    </declare-styleable>
+    
+</resources>

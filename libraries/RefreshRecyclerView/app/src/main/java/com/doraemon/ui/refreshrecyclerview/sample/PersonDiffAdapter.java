@@ -2,6 +2,7 @@ package com.doraemon.ui.refreshrecyclerview.sample;
 
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,15 +31,16 @@ public class PersonDiffAdapter extends BaseDiffAdapter<Person> {
     @Override
     protected void initViewHolder(RecyclerView.ViewHolder viewHolder, Person item, int position) {
 
-
         PersonViewHolder personViewHolder = (PersonViewHolder) viewHolder;
         personViewHolder.init(item);
     }
 
     @Override
-    protected void refreshViewHolder(RecyclerView.ViewHolder viewHolder, Person item, int position) {
+    protected void refreshViewHolder(RecyclerView.ViewHolder viewHolder, Person item, int position, Object payload) {
         PersonViewHolder personViewHolder = (PersonViewHolder) viewHolder;
         personViewHolder.refresh(item);
+
+        Log.i("tag", "refresh");
     }
 
     static class PersonViewHolder extends RecyclerView.ViewHolder {
@@ -47,6 +49,7 @@ public class PersonDiffAdapter extends BaseDiffAdapter<Person> {
 
         private TextView name;
         private ImageView icon;
+        private TextView phone;
 
         private Resources resources;
 
@@ -57,21 +60,17 @@ public class PersonDiffAdapter extends BaseDiffAdapter<Person> {
 
             name = contentView.findViewById(R.id.name);
             icon = contentView.findViewById(R.id.icon);
+            phone = contentView.findViewById(R.id.phone);
         }
 
         void init(Person item) {
-
             name.setText(item.getName());
-            if (item.isBeauty()) {
-                icon.setImageDrawable(resources.getDrawable(R.mipmap.ic_launcher_round));
-            } else {
-                icon.setImageDrawable(resources.getDrawable(R.mipmap.ic_launcher));
-            }
+            icon.setImageDrawable(resources.getDrawable(R.mipmap.ic_launcher_round));
+            phone.setText(item.getPhone());
         }
 
         void refresh(Person item) {
-
-            name.setText(item.getName());
+            phone.setText(item.getPhone());
         }
 
     }

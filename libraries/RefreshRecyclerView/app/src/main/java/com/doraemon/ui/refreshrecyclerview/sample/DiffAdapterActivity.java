@@ -35,8 +35,8 @@ public class DiffAdapterActivity extends AppCompatActivity {
             public void run() {
 
                 final List<Person> persons = new LinkedList<>();
-                persons.add(new Person("ricken", true));
-                persons.add(new Person("brady", true));
+                persons.add(new Person("ricken", "12345"));
+                persons.add(new Person("brady", "123456"));
 
                 runInMainThread(new Runnable() {
                     @Override
@@ -53,10 +53,10 @@ public class DiffAdapterActivity extends AppCompatActivity {
                 }
 
 
-                final Person hertz = new Person("hertz", true);
+                final Person hertz = new Person("ricken", "1234567");
                 final List<Person> newPersons = new LinkedList<>(persons);
-                //newPersons.add(hertz);
-                newPersons.add(1, hertz);
+                newPersons.remove(0);
+                newPersons.add(0, hertz);
 
                 runInMainThread(new Runnable() {
                     @Override
@@ -65,33 +65,9 @@ public class DiffAdapterActivity extends AppCompatActivity {
                     }
                 });
 
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-
-                for (int i = 0; i < 20; i++) {
-
-                    final int number = i;
-                    newPersons.get(1).setName("ricken_" + number);
-                    newPersons.get(1).setBeauty(number % 2 == 0);
-                    runInMainThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            personAdapter.setList(newPersons);
-                        }
-                    });
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-
             }
         }).start();
+
     }
 
 

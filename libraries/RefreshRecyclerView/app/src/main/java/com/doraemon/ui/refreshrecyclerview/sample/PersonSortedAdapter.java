@@ -65,11 +65,9 @@ public class PersonSortedAdapter extends BaseSortedAdapter<Person> {
         void init(Person item) {
 
             name.setText(item.getName());
-            if (item.isBeauty()) {
+
                 icon.setImageDrawable(resources.getDrawable(R.mipmap.ic_launcher_round));
-            } else {
-                icon.setImageDrawable(resources.getDrawable(R.mipmap.ic_launcher));
-            }
+
         }
 
         void refresh(Person item) {

@@ -1,9 +1,11 @@
 package com.doraemon.ui.list;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +13,9 @@ import android.view.ViewGroup;
 import java.util.List;
 
 /**
- * 内部使用 {@link List} 来保存数据，更适合于不用刷新单个 Item 的场景。
+ * 内部使用 {@link List} 来保存数据，更适合于拉取 COS 列表项展示的场景。
+ *
+ * 1、列表项
  *
  * Created by rickenwang on 2018/10/16.
  * <p>
@@ -32,8 +36,10 @@ public abstract class BaseDiffAdapter<T extends ItemSortable<T>>
 
     public BaseDiffAdapter() {}
 
+    private boolean detectMoves;
 
     /**
+     * 刷新 Adapter 的数据，并同步修改 UI 。
      *
      * @param data 这里需要注意如果 data 一直复用同一个 List，那么 areContentsTheSame 方法可能会一直返回 true，
      *             导致列表视图不刷新。
@@ -41,7 +47,6 @@ public abstract class BaseDiffAdapter<T extends ItemSortable<T>>
     public void setList(final List<? extends T> data) {
 
         if (items == null) {
-
             items = data;
             notifyItemRangeInserted(0, data.size());
         } else {
@@ -66,11 +71,22 @@ public abstract class BaseDiffAdapter<T extends ItemSortable<T>>
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
                     return items.get(oldItemPosition).areContentsTheSame(data.get(newItemPosition));
                 }
-            });
+
+                @Nullable
+                @Override
+                public Object getChangePayload(int oldItemPosition, int newItemPosition) {
+
+                    return data.get(newItemPosition).payload(items.get(oldItemPosition));
+                }
+            }, detectMoves);
 
             items = data;
             result.dispatchUpdatesTo(this);
         }
+    }
+
+    public void setDetectMoves(boolean detectMoves) {
+        this.detectMoves = detectMoves;
     }
 
 
@@ -105,7 +121,7 @@ public abstract class BaseDiffAdapter<T extends ItemSortable<T>>
      * @param viewHolder
      * @param item
      */
-    protected abstract void refreshViewHolder(RecyclerView.ViewHolder viewHolder, T item, int position);
+    protected abstract void refreshViewHolder(RecyclerView.ViewHolder viewHolder, T item, int position, Object payload);
 
     @NonNull
     @Override
@@ -137,7 +153,7 @@ public abstract class BaseDiffAdapter<T extends ItemSortable<T>>
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull List<Object> payloads) {
 
         if (!payloads.isEmpty()) {
-            refreshViewHolder(holder, items.get(position), position);
+            refreshViewHolder(holder, items.get(position), position, payloads.get(0));
             return;
         }
 

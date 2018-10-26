@@ -12,4 +12,6 @@ public interface ItemSortable<T> {
     boolean areContentsTheSame(T o);
 
     boolean areItemsTheSame(T o);
+
+    Object payload(T o);
 }

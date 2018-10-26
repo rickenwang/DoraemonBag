@@ -35,8 +35,8 @@ public class SortedAdapterActivity extends AppCompatActivity {
             public void run() {
 
                 final List<Person> persons = new LinkedList<>();
-                persons.add(new Person("ricken", true));
-                persons.add(new Person("brady", true));
+                persons.add(new Person("ricken", "12345"));
+                persons.add(new Person("brady", "123456"));
 
                 runInMainThread(new Runnable() {
                     @Override
@@ -52,7 +52,7 @@ public class SortedAdapterActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                final Person hertz = new Person("hertz", true);
+                final Person hertz = new Person("hertz", "1234567");
 
                 runInMainThread(new Runnable() {
                     @Override
@@ -87,7 +87,8 @@ public class SortedAdapterActivity extends AppCompatActivity {
                     runInMainThread(new Runnable() {
                         @Override
                         public void run() {
-                            personAdapter.update(new Person("ricken_" + number, number % 2 == 0), 1);
+                            personAdapter.update(new Person("ricken_" + number,
+                                    "12345"), 1);
                         }
                     });
                     try {
