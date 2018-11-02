@@ -7,7 +7,6 @@ import android.os.Build;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -91,7 +90,7 @@ public class ErasableInputText extends ConstraintLayout {
             typedArray.recycle();
         }
 
-        View view = LayoutInflater.from(context).inflate(R.layout.erasable_input_text, this, true);
+        View view = LayoutInflater.from(context).inflate(R.layout.doraemon_input_text, this, true);
 
         final EditText editText = view.findViewById(R.id.text);
         final ImageView crossView = view.findViewById(R.id.cross);
@@ -102,10 +101,13 @@ public class ErasableInputText extends ConstraintLayout {
             editText.setHint(tipHint);
         }
 
-        LayoutParams layoutParams = (LayoutParams) editText.getLayoutParams();
-        layoutParams.setMargins(startMargin, verticalMargin, layoutParams.rightMargin, verticalMargin);
-        editText.setLayoutParams(layoutParams);
-        editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+        ConstraintLayout.LayoutParams params = (LayoutParams) editText.getLayoutParams();
+        params.bottomMargin = verticalMargin;
+        params.topMargin = verticalMargin;
+        params.leftMargin = startMargin;
+
+        editText.setLayoutParams(params);
+        editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         editText.setInputType(inputType);
 
         editText.addTextChangedListener(new TextWatcher() {

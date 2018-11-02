@@ -35,8 +35,8 @@ dependencies {
 }
 
 
-project.extensions.add('groupId', 'com.doraemon.ui.transfer')
-project.extensions.add('artifactId', 'TransferProgressIndicatorView')
+project.extensions.add('groupId', 'com.doraemon.ui')
+project.extensions.add('artifactId', 'TransferProgressView')
 project.extensions.add('packageName', 'TransferProgressIndicatorView')
 project.extensions.add('artifactDesc', 'a doraemon ui component')
 

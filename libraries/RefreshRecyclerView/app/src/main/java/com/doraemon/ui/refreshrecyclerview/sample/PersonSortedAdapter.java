@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.doraemon.ui.list.BaseSortedAdapter;
+import com.doraemon.ui.BaseSortedAdapter;
 
 /**
  * Created by rickenwang on 2018/10/17.

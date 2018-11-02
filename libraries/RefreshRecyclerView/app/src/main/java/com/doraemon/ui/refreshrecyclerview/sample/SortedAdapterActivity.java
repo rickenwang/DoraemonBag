@@ -4,7 +4,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.doraemon.ui.list.LinearRecyclerView;
+import com.doraemon.ui.LinearRecyclerView;
 
 import java.util.LinkedList;
 import java.util.List;

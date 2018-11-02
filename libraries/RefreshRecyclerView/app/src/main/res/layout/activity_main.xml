@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".SortedAdapterActivity">
 
-    <com.doraemon.ui.list.LinearRecyclerView
+    <com.doraemon.ui.DragSwipeRecyclerView
         android:id="@+id/refresh_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"

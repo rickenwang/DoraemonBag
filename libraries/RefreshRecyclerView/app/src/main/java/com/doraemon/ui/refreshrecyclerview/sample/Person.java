@@ -1,6 +1,6 @@
 package com.doraemon.ui.refreshrecyclerview.sample;
 
-import com.doraemon.ui.list.ItemSortable;
+import com.doraemon.ui.ItemSortable;
 
 /**
  * Created by rickenwang on 2018/10/17.
@@ -21,17 +21,33 @@ public class Person implements ItemSortable<Person> {
 
     @Override
     public int compare(Person o) {
+
+        if (o == null) {
+
+            return 1;
+        }
+
         return name.compareTo(o.name);
     }
 
     @Override
     public boolean areContentsTheSame(Person o) {
+
+        if (o == null) {
+            return false;
+        }
+
         return name.equals(o.name)
                 && phone.equals(o.phone);
     }
 
     @Override
     public boolean areItemsTheSame(Person o) {
+
+        if (o == null) {
+            return false;
+        }
+
         return name.equals(o.name);
     }
 

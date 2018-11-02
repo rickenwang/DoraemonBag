@@ -15,5 +15,13 @@
         </attr>
         
     </declare-styleable>
+
+    <declare-styleable name="SimplePageIndicator">
+
+        <attr name="selected_img" format="reference"/>
+        <attr name="unselected_img" format="reference"/>
+        <attr name="page_name" format="string"/>
+
+    </declare-styleable>
     
 </resources>

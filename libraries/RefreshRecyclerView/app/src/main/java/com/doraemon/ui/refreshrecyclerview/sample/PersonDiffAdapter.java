@@ -7,15 +7,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.doraemon.ui.list.BaseDiffAdapter;
-import com.doraemon.ui.list.BaseSortedAdapter;
+import com.doraemon.ui.BaseDiffAdapter;
+import com.doraemon.ui.BaseSortedAdapter;
+import com.doraemon.ui.DragToLoadAdapter;
 
 /**
  * Created by rickenwang on 2018/10/17.
  * <p>
  * Copyright (c) 2010-2020 Tencent Cloud. All rights reserved.
  */
-public class PersonDiffAdapter extends BaseDiffAdapter<Person> {
+public class PersonDiffAdapter extends DragToLoadAdapter<Person> {
 
 
     @Override
@@ -33,6 +34,7 @@ public class PersonDiffAdapter extends BaseDiffAdapter<Person> {
 
         PersonViewHolder personViewHolder = (PersonViewHolder) viewHolder;
         personViewHolder.init(item);
+        Log.i("doraemon", "init " + position);
     }
 
     @Override
@@ -40,7 +42,7 @@ public class PersonDiffAdapter extends BaseDiffAdapter<Person> {
         PersonViewHolder personViewHolder = (PersonViewHolder) viewHolder;
         personViewHolder.refresh(item);
 
-        Log.i("tag", "refresh");
+        Log.i("doraemon", "refresh" + position);
     }
 
     static class PersonViewHolder extends RecyclerView.ViewHolder {
@@ -64,13 +66,21 @@ public class PersonDiffAdapter extends BaseDiffAdapter<Person> {
         }
 
         void init(Person item) {
-            name.setText(item.getName());
-            icon.setImageDrawable(resources.getDrawable(R.mipmap.ic_launcher_round));
-            phone.setText(item.getPhone());
+
+            if (item != null) {
+
+                name.setText(item.getName());
+                icon.setImageDrawable(resources.getDrawable(R.mipmap.ic_launcher_round));
+                phone.setText(item.getPhone());
+            }
         }
 
         void refresh(Person item) {
-            phone.setText(item.getPhone());
+
+            if (item != null) {
+                phone.setText(item.getPhone());
+
+            }
         }
 
     }

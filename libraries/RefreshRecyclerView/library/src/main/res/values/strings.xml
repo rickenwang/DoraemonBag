@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">library</string>
+    <string name="loading_more">正在加载更多</string>
+    <string name="no_more">已经加载全部</string>
 </resources>
